@@ -60,9 +60,9 @@ The pipeline:
 
 | Plan | Price | Words / mo | Notes |
 |---|---|---|---|
-| Free | $0 | 500 | Account required. No voice matching. |
-| Pro | $19 | 50,000 | Voice matching, history, faster queue |
-| Business | $49 | Unlimited | Team seats (5), API access, priority |
+| Free | $0 | 1,000 | Account required. No voice matching. |
+| Pro | $9 | 30,000 | Voice matching, history, faster queue |
+| Business | $29 | 200,000 | Team seats (5), API access, priority |
 
 ## Voice and tone (this matters)
 

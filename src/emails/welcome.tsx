@@ -49,8 +49,8 @@ export default function WelcomeEmail({ firstName, appUrl }: WelcomeEmailProps) {
           </Section>
 
           <Text style={paragraph}>
-            You&apos;ve got 500 free words a month on the house. They reset on
-            the 1st. When you outgrow it, Pro is $19 and gives you 50,000.
+            You&apos;ve got 1,000 free words a month on the house. They reset
+            on the 1st. When you outgrow it, Pro is $9 and gives you 30,000.
           </Text>
 
           <Text style={paragraph}>

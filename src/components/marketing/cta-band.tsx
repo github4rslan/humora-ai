@@ -11,8 +11,8 @@ export function CtaBand() {
             Stop sounding like ChatGPT.
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-            Free to try. No card. I&apos;ll handle your first 500 words on the
-            house.
+            Free to try. No card. I&apos;ll handle your first 1,000 words on
+            the house.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg">

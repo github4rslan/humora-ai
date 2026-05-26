@@ -16,9 +16,9 @@ export const PLANS: Record<PlanId, Plan> = {
     name: "Free",
     priceMonthly: 0,
     priceAnnual: 0,
-    wordsPerMonth: 500,
+    wordsPerMonth: 1_000,
     features: [
-      "500 words a month",
+      "1,000 words a month",
       "Natural tone",
       "Two-pass humanizer",
     ],
@@ -26,11 +26,11 @@ export const PLANS: Record<PlanId, Plan> = {
   pro: {
     id: "pro",
     name: "Pro",
-    priceMonthly: 19,
-    priceAnnual: 190,
-    wordsPerMonth: 50_000,
+    priceMonthly: 9,
+    priceAnnual: 90,
+    wordsPerMonth: 30_000,
     features: [
-      "50,000 words a month",
+      "30,000 words a month",
       "All four tones",
       "Voice matching from your writing samples",
       "History of past rewrites",
@@ -42,11 +42,11 @@ export const PLANS: Record<PlanId, Plan> = {
   business: {
     id: "business",
     name: "Business",
-    priceMonthly: 49,
-    priceAnnual: 490,
-    wordsPerMonth: 1_000_000,
+    priceMonthly: 29,
+    priceAnnual: 290,
+    wordsPerMonth: 200_000,
     features: [
-      "1,000,000 words a month",
+      "200,000 words a month",
       "5 team seats",
       "API access",
       "Custom tones",

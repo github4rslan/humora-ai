@@ -28,11 +28,11 @@ We're not a "bypass AI detection" tool, even though the output will read more na
 
 | Plan | Monthly | Words / mo | What's included |
 |---|---|---|---|
-| Free | $0 | 500 | One tone, basic output |
-| Pro | $19 | 50,000 | All tones, voice matching, history, side-by-side diff |
-| Business | $49 | Unlimited (fair use) | 5 seats, API access, priority queue, custom tones |
+| Free | $0 | 1,000 | One tone, basic output |
+| Pro | $9 | 30,000 | All tones, voice matching, history, side-by-side diff |
+| Business | $29 | 200,000 | 5 seats, API access, priority queue, custom tones |
 
-Annual: 2 months free (Pro $190/yr, Business $490/yr).
+Annual: 2 months free (Pro $90/yr, Business $290/yr).
 
 ## MVP scope (what ships first)
 
@@ -57,8 +57,8 @@ Annual: 2 months free (Pro $190/yr, Business $490/yr).
 
 - Day 1: landing page deploys, demo works for anonymous users
 - Week 1: first paid signup
-- Month 1: 100 signups, 10 paid, $190 MRR
-- Month 3: 1,000 signups, 100 paid, $1,900 MRR
+- Month 1: 100 signups, 10 paid, $90 MRR
+- Month 3: 1,000 signups, 100 paid, $900 MRR
 
 These are *targets*, not promises. Reality usually under-shoots month 1 and over-shoots month 3 if the product is good.
 

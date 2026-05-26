@@ -37,7 +37,7 @@
 
 - [ ] Drizzle schema + Neon connection
 - [ ] Usage tracking with monthly reset
-- [ ] Stripe products + prices (Pro $19, Business $49)
+- [ ] Stripe products + prices (Pro $9, Business $29)
 - [ ] Checkout session route
 - [ ] Webhook handler (subscription created / updated / cancelled)
 - [ ] Upgrade modal when over limit

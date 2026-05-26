@@ -68,7 +68,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-6 text-center text-xs text-muted-foreground"
         >
-          No card. No fuss. I&apos;ll handle your first 500 words on the house.
+          No card. No fuss. I&apos;ll handle your first 1,000 words on the house.
         </motion.div>
       </div>
     </section>

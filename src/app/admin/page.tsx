@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getOverview } from "@/lib/admin";
+import { PLANS } from "@/lib/plans";
 import { Users, CreditCard, FileText, Sparkles } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +35,7 @@ export default async function AdminOverview() {
           icon={Sparkles}
           label="MRR"
           value={`$${stats.mrr.toLocaleString()}`}
-          sub={`Pro $${(stats.planBreakdown.pro * 19).toLocaleString()} · Business $${(stats.planBreakdown.business * 49).toLocaleString()}`}
+          sub={`Pro $${(stats.planBreakdown.pro * PLANS.pro.priceMonthly).toLocaleString()} · Business $${(stats.planBreakdown.business * PLANS.business.priceMonthly).toLocaleString()}`}
         />
         <Stat
           icon={FileText}
