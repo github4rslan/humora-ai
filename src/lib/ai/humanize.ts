@@ -1,4 +1,4 @@
-import { generateText, streamText } from "ai";
+import { generateText, streamText, type LanguageModel } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { anthropic } from "@ai-sdk/anthropic";
 import {
@@ -9,8 +9,14 @@ import {
   type Tone,
 } from "./prompts";
 
-const PRIMARY_MODEL = openai("gpt-4o-mini");
-const FALLBACK_MODEL = anthropic("claude-haiku-4-5-20251001");
+function getPrimaryModel(): LanguageModel {
+  return openai("gpt-4o-mini");
+}
+
+function getFallbackModel(): LanguageModel | null {
+  if (!process.env.ANTHROPIC_API_KEY) return null;
+  return anthropic("claude-haiku-4-5-20251001");
+}
 
 export type HumanizeInput = {
   text: string;
@@ -30,14 +36,16 @@ async function callWithFallback(args: {
 }): Promise<string> {
   try {
     const { text } = await generateText({
-      model: PRIMARY_MODEL,
+      model: getPrimaryModel(),
       system: args.system,
       prompt: args.prompt,
     });
     return text;
-  } catch {
+  } catch (err) {
+    const fallback = getFallbackModel();
+    if (!fallback) throw err;
     const { text } = await generateText({
-      model: FALLBACK_MODEL,
+      model: fallback,
       system: args.system,
       prompt: args.prompt,
     });
@@ -75,7 +83,7 @@ export async function humanize(input: HumanizeInput): Promise<HumanizeResult> {
 
 export function streamHumanizeDraft(input: HumanizeInput) {
   return streamText({
-    model: PRIMARY_MODEL,
+    model: getPrimaryModel(),
     system: HUMANIZER_SYSTEM_PROMPT,
     prompt: buildHumanizeUserMessage(input),
   });
