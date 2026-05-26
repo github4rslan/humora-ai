@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { requireAdmin } from "@/lib/admin";
+import { getOrCreateUser } from "@/lib/usage";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -14,7 +16,14 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await requireAdmin();
+  const userId = await requireAdmin();
+  try {
+    const u = await currentUser();
+    const email = u?.emailAddresses[0]?.emailAddress;
+    if (email) await getOrCreateUser({ id: userId, email });
+  } catch (err) {
+    console.error("[admin layout] getOrCreateUser failed", err);
+  }
 
   return (
     <div className="flex min-h-screen flex-col">

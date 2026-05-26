@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
+import { getOrCreateUser } from "@/lib/usage";
 import { Shield } from "lucide-react";
 
 export default async function AppLayout({
@@ -12,6 +13,18 @@ export default async function AppLayout({
 }) {
   const { userId } = await auth();
   const showAdmin = isAdmin(userId);
+
+  if (userId) {
+    try {
+      const u = await currentUser();
+      const email = u?.emailAddresses[0]?.emailAddress;
+      if (email) {
+        await getOrCreateUser({ id: userId, email });
+      }
+    } catch (err) {
+      console.error("[app layout] getOrCreateUser failed", err);
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col">

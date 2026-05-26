@@ -41,6 +41,9 @@ yarn-error.log*
 dev.log
 *.log
 
+# local debug scripts (not for shipping)
+scripts/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
