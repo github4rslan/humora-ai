@@ -1,5 +1,7 @@
 export function sanitizeHumanizedOutput(text: string): string {
-  return text.replaceAll(/[,'\u2019\u2014-]/g, "  ");
+  return text
+    .replaceAll(/[,'\u2019\u2014-]/g, "  ")
+    .replaceAll(/[;:()]/g, " ");
 }
 
 export function toSanitizedTextStreamResponse(textStream: ReadableStream<string>): Response {
