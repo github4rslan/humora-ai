@@ -59,6 +59,8 @@ Avoiding AI patterns is half the job. Sterile writing is just as obvious as slop
 
 ## The 29 patterns
 
+Before returning the final text, the model must silently check the rewrite against this list. If the output still contains a banned pattern, it must revise again internally. The user should only see the final rewrite.
+
 ### Content patterns
 
 **1. Significance inflation** — "marking a pivotal moment in the evolution of..." → state the fact.
@@ -77,7 +79,7 @@ Watch for: boasts, vibrant, rich (figurative), nestled, breathtaking, must-visit
 
 ### Language patterns
 
-**7. AI vocabulary** — additionally, delve, enhance, fostering, garner, intricate, key (adj), landscape (abstract), pivotal, showcase, tapestry, testament, underscore, valuable, vibrant.
+**7. AI vocabulary** — additionally, delve, enhance, fostering, garner, intricate, key (adj), landscape (abstract), pivotal, showcase, showcases, tapestry, testament, transformative, underscore, unlock, seamless, valuable, vibrant.
 
 **8. Copula avoidance** — "serves as / features / boasts" → "is / has."
 
@@ -137,6 +139,8 @@ Watch for: boasts, vibrant, rich (figurative), nestled, breathtaking, must-visit
 ---
 
 ## Process the model follows
+
+Humora uses a single visible output. Any audit/revision work should happen internally unless a separate audit feature calls for it.
 
 1. Read the input
 2. Identify pattern instances
