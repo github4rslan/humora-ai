@@ -61,7 +61,7 @@ Avoiding AI patterns is half the job. Sterile writing is just as obvious as slop
 
 Before returning the final text, the model must silently check the rewrite against this list. If the output still contains a banned pattern, it must revise again internally. The user should only see the final rewrite.
 
-The API also post-processes model output and replaces commas, apostrophes, and hyphens with spaces before returning text to the user.
+The API also post-processes model output and replaces commas, apostrophes, hyphens, and em dashes with spaces before returning text to the user.
 
 ### Content patterns
 
