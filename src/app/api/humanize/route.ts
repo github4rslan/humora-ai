@@ -19,12 +19,16 @@ export async function POST(req: Request) {
 
   const limiter = getUserLimiter();
   if (limiter) {
-    const { success } = await limiter.limit(userId);
-    if (!success) {
-      return NextResponse.json(
-        { error: "Slow down a sec. You're sending requests faster than the limit allows." },
-        { status: 429 }
-      );
+    try {
+      const { success } = await limiter.limit(userId);
+      if (!success) {
+        return NextResponse.json(
+          { error: "Slow down a sec. You're sending requests faster than the limit allows." },
+          { status: 429 }
+        );
+      }
+    } catch (err) {
+      console.warn("[humanize] rate limit unavailable", err);
     }
   }
 

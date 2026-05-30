@@ -17,12 +17,16 @@ export async function POST(req: Request) {
 
   const limiter = getAnonLimiter();
   if (limiter) {
-    const { success } = await limiter.limit(ip);
-    if (!success) {
-      return NextResponse.json(
-        { error: "The demo is rate-limited to 3 runs an hour. Sign up free for more." },
-        { status: 429 }
-      );
+    try {
+      const { success } = await limiter.limit(ip);
+      if (!success) {
+        return NextResponse.json(
+          { error: "The demo is rate-limited to 3 runs an hour. Sign up free for more." },
+          { status: 429 }
+        );
+      }
+    } catch (err) {
+      console.warn("[humanize/demo] rate limit unavailable", err);
     }
   }
 
