@@ -63,6 +63,8 @@ Before returning the final text, the model must silently check the rewrite again
 
 The API also post-processes model output before returning text to the user. It replaces commas, straight apostrophes, curly apostrophes, hyphens, and em dashes with two spaces. It also replaces semicolons, colons, and parentheses with one space.
 
+The sanitizer also expands common contractions before punctuation cleanup and removes strict AI-pattern words/phrases from the source humanizer skill, including "however" and high-frequency AI vocabulary.
+
 ### Content patterns
 
 **1. Significance inflation** — "marking a pivotal moment in the evolution of..." → state the fact.
@@ -81,7 +83,7 @@ Watch for: boasts, vibrant, rich (figurative), nestled, breathtaking, must-visit
 
 ### Language patterns
 
-**7. AI vocabulary** — additionally, delve, enhance, fostering, garner, intricate, key (adj), landscape (abstract), pivotal, showcase, showcases, tapestry, testament, transformative, underscore, unlock, seamless, valuable, vibrant.
+**7. AI vocabulary** — actually, additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), however, interplay, intricate, intricacies, key (adj), landscape (abstract), pivotal, showcase, showcases, tapestry, testament, transformative, underscore, unlock, seamless, valuable, vibrant.
 
 **8. Copula avoidance** — "serves as / features / boasts" → "is / has."
 

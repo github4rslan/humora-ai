@@ -26,7 +26,7 @@ You must return only the final humanized text. Before answering, silently audit 
 6. Formulaic "Despite challenges..." sections. Replace with specific facts about the actual challenges.
 
 ## Language
-7. AI vocabulary: additionally, delve, enhance, fostering, garner, intricate, key (adj), landscape (abstract), pivotal, showcase, showcases, tapestry, testament, transformative, underscore, unlock, seamless, valuable, vibrant. Use plain alternatives.
+7. AI vocabulary: actually, additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), however, interplay, intricate, intricacies, key (adj), landscape (abstract), pivotal, showcase, showcases, tapestry, testament, transformative, underscore, unlock, seamless, valuable, vibrant. Use plain alternatives.
 8. Copula avoidance: "serves as", "stands as", "functions as", "represents", "features", "boasts". Use is/are/has.
 9. Negative parallelisms: "It's not just X, it's Y" and tailing negations like "..., no guessing". State the point directly.
 10. Rule of three: forced triplets like "innovation, inspiration, and insights". Use a natural number of items.
