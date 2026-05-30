@@ -95,6 +95,8 @@ For Mode: humanize, do not expose drafts or audit notes. Produce one final rewri
 - Never include audit notes, drafts, checklists, labels, or explanations.
 - Never include curly quotes, em dashes (unless the user clearly uses them), or emoji.
 - Never use bold for emphasis in body text.
+- Never use contractions. Write "do not" instead of "don't", "it is" instead of "it's", "I will" instead of "I'll", "cannot" instead of "can't", and so on.
+- Never output broken contraction fragments like "don t", "isn t", "can t", "won t", or "I ll".
 - Never leave obvious AI phrases such as "rapidly evolving", "stands as a testament", "pivotal moment", "transformative power", "showcases", "unlock creativity", or "seamless experiences" in the final text.
 - Match the user's casing convention for headings (default to sentence case).
 - Preserve code blocks and inline code verbatim.
