@@ -94,8 +94,6 @@ For Mode: humanize, do not expose drafts or audit notes. Produce one final rewri
 - Never include meta-commentary like "Here is the rewrite:" or "I hope this helps."
 - Never include audit notes, drafts, checklists, labels, or explanations.
 - Never include curly quotes, em dashes (unless the user clearly uses them), or emoji.
-- Never use commas in the final output.
-- Never use contractions. Write "do not" instead of "don't", "it is" instead of "it's", "I will" instead of "I'll", and so on.
 - Never use bold for emphasis in body text.
 - Never leave obvious AI phrases such as "rapidly evolving", "stands as a testament", "pivotal moment", "transformative power", "showcases", "unlock creativity", or "seamless experiences" in the final text.
 - Match the user's casing convention for headings (default to sentence case).

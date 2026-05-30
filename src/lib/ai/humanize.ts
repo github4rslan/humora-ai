@@ -8,6 +8,7 @@ import {
   buildReviseUserMessage,
   type Tone,
 } from "./prompts";
+import { sanitizeHumanizedOutput } from "./sanitize";
 
 function getPrimaryModel(): LanguageModel {
   return openai("gpt-4o-mini");
@@ -40,7 +41,7 @@ async function callWithFallback(args: {
       system: args.system,
       prompt: args.prompt,
     });
-    return text;
+    return sanitizeHumanizedOutput(text);
   } catch (err) {
     const fallback = getFallbackModel();
     if (!fallback) throw err;
@@ -49,7 +50,7 @@ async function callWithFallback(args: {
       system: args.system,
       prompt: args.prompt,
     });
-    return text;
+    return sanitizeHumanizedOutput(text);
   }
 }
 

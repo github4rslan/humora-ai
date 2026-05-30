@@ -3,6 +3,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { HUMANIZER_SYSTEM_PROMPT, buildHumanizeUserMessage, type Tone } from "@/lib/ai/prompts";
+import { sanitizeHumanizedOutput, toSanitizedTextStreamResponse } from "@/lib/ai/sanitize";
 import { checkUsage, incrementUsage, getOrCreateUser } from "@/lib/usage";
 import { getUserLimiter } from "@/lib/ratelimit";
 import { countWords } from "@/lib/utils";
@@ -79,7 +80,7 @@ export async function POST(req: Request) {
           userId,
           tone,
           inputText: text.slice(0, 50_000),
-          outputText: outputText.slice(0, 50_000),
+          outputText: sanitizeHumanizedOutput(outputText).slice(0, 50_000),
           wordCount: words,
         });
       } catch (err) {
@@ -88,5 +89,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toTextStreamResponse();
+  return toSanitizedTextStreamResponse(result.textStream);
 }

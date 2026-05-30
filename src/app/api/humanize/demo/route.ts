@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { HUMANIZER_SYSTEM_PROMPT, buildHumanizeUserMessage, type Tone } from "@/lib/ai/prompts";
+import { toSanitizedTextStreamResponse } from "@/lib/ai/sanitize";
 import { getAnonLimiter } from "@/lib/ratelimit";
 import { countWords } from "@/lib/utils";
 
@@ -38,9 +39,9 @@ export async function POST(req: Request) {
   const tone: Tone = TONES.includes(body.tone) ? body.tone : "natural";
 
   const words = countWords(text);
-  if (words > 220) {
+  if (words > 400) {
     return NextResponse.json(
-      { error: "The demo handles up to 200 words. Sign up free for longer drafts." },
+      { error: "The demo handles up to 400 words. Sign up free for longer drafts." },
       { status: 400 }
     );
   }
@@ -51,5 +52,5 @@ export async function POST(req: Request) {
     prompt: buildHumanizeUserMessage({ text, tone }),
   });
 
-  return result.toTextStreamResponse();
+  return toSanitizedTextStreamResponse(result.textStream);
 }
