@@ -61,6 +61,10 @@ Avoiding AI patterns is half the job. Sterile writing is just as obvious as slop
 
 Before returning the final text, the model must silently check the rewrite against this list. If the output still contains a banned pattern, it must revise again internally. The user should only see the final rewrite.
 
+Hard output style rules:
+- Do not use commas in the final output.
+- Do not use contractions. Write "do not" instead of "don't", "it is" instead of "it's", "I will" instead of "I'll", and so on.
+
 ### Content patterns
 
 **1. Significance inflation** — "marking a pivotal moment in the evolution of..." → state the fact.

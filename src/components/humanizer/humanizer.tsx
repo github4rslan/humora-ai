@@ -13,7 +13,7 @@ import type { Tone } from "@/lib/ai/prompts";
 
 const TONES: { id: Tone; label: string; hint: string }[] = [
   { id: "natural", label: "Natural", hint: "My default. Varied, a little opinionated." },
-  { id: "casual", label: "Casual", hint: "Looser. Contractions and fragments allowed." },
+  { id: "casual", label: "Casual", hint: "Looser. Sentence fragments allowed." },
   { id: "professional", label: "Professional", hint: "Clean and clear, no fluff." },
   { id: "academic", label: "Academic", hint: "Precise. Hedging where it earns its keep." },
 ];
@@ -101,13 +101,16 @@ export function Humanizer() {
             <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
               <span>My version</span>
               {output && (
-                <button
+                <Button
                   onClick={copy}
-                  className="inline-flex items-center gap-1 rounded-full px-2 py-1 hover:bg-muted"
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  aria-label={copied ? "Copied" : "Copy humanized text"}
+                  title={copied ? "Copied" : "Copy humanized text"}
                 >
                   {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                  {copied ? "Copied" : "Copy"}
-                </button>
+                </Button>
               )}
             </div>
             <AnimatePresence mode="wait">

@@ -4,7 +4,7 @@ const TONE_INSTRUCTIONS: Record<Tone, string> = {
   natural:
     "Default tone. Conversational, opinionated where warranted, varied rhythm. Sounds like a thoughtful person writing, not a press release.",
   casual:
-    "Looser. Contractions are fine, occasional sentence fragments are fine. Blog-post energy. Still clear, just relaxed.",
+    "Looser. Occasional sentence fragments are fine. Blog-post energy. Still clear, just relaxed. Do not use contractions.",
   professional:
     "Clean, clear, no jargon, no fluff. Confident without being corporate. Avoid hedging. Avoid the word 'leverage.'",
   academic:
@@ -94,6 +94,8 @@ For Mode: humanize, do not expose drafts or audit notes. Produce one final rewri
 - Never include meta-commentary like "Here is the rewrite:" or "I hope this helps."
 - Never include audit notes, drafts, checklists, labels, or explanations.
 - Never include curly quotes, em dashes (unless the user clearly uses them), or emoji.
+- Never use commas in the final output.
+- Never use contractions. Write "do not" instead of "don't", "it is" instead of "it's", "I will" instead of "I'll", and so on.
 - Never use bold for emphasis in body text.
 - Never leave obvious AI phrases such as "rapidly evolving", "stands as a testament", "pivotal moment", "transformative power", "showcases", "unlock creativity", or "seamless experiences" in the final text.
 - Match the user's casing convention for headings (default to sentence case).

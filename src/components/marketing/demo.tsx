@@ -91,13 +91,16 @@ export function Demo() {
           <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
             <span>My version</span>
             {output && (
-              <button
+              <Button
                 onClick={copy}
-                className="inline-flex items-center gap-1 rounded-full px-2 py-1 hover:bg-muted"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                aria-label={copied ? "Copied" : "Copy humanized text"}
+                title={copied ? "Copied" : "Copy humanized text"}
               >
                 {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                {copied ? "Copied" : "Copy"}
-              </button>
+              </Button>
             )}
           </div>
 
