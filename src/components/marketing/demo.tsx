@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { EngineSelectInline } from "@/components/humanizer/engine-select";
 
 const SAMPLE = `In today's rapidly evolving technological landscape, AI-assisted coding stands as an enduring testament to the transformative potential of large language models, marking a pivotal moment in the evolution of software development. It's not just about autocomplete—it's about unlocking creativity at scale, ensuring that organizations can remain agile while delivering seamless experiences.`;
 
@@ -17,6 +18,7 @@ export function Demo() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [engine, setEngine] = useState<string>("humora-original");
 
   async function run() {
     if (!input.trim() || loading) return;
@@ -26,7 +28,7 @@ export function Demo() {
       const res = await fetch("/api/humanize/demo", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: input, tone: "natural" }),
+        body: JSON.stringify({ text: input, tone: "natural", engine }),
       });
 
       if (!res.ok) {
@@ -176,7 +178,8 @@ export function Demo() {
         </Card>
       </div>
 
-      <div className="mt-6 flex justify-center">
+      <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <EngineSelectInline value={engine} onChange={setEngine} />
         <Button onClick={run} disabled={loading || !input.trim()} size="lg">
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
