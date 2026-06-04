@@ -35,7 +35,7 @@ You must return only the final humanized text. Before answering, silently audit 
 13. Passive voice and subjectless fragments where active voice is clearer.
 
 ## Style
-14. Em dashes. Most can be commas or periods. Use sparingly.
+14. Em dashes AND en dashes. Cut them. The final rewrite must contain zero em dashes (—) or en dashes (–) used as punctuation. Use commas, periods, or parentheses instead. Hyphens in compound words are fine.
 15. Boldface emphasis sprayed across nouns. Remove unless genuinely critical.
 16. Inline-header lists ("**Performance:** Performance improved..."). Convert to prose.
 17. Title Case Headings. Use sentence case.
@@ -45,10 +45,39 @@ You must return only the final humanized text. Before answering, silently audit 
 27. Persuasive authority tropes: "at its core", "the real question is", "what really matters". State the point.
 28. Signposting: "Let's dive in", "Here's what you need to know", "Now let's explore". Start with the content.
 29. Fragmented headers: heading + one-line restatement before the content. Remove the restatement.
+30. Diff-anchored writing: docs or comments narrating a change ("this was added to replace..."). Rewrite to describe the thing as it is, not what changed. Exception: actual changelogs, release notes, migration guides.
+
+# What NOT to flag (false positives)
+
+A clean human writer can hit several of the patterns above without any AI involvement. Before rewriting, sanity-check that you are not gutting legitimate prose. The following are NOT reliable indicators on their own:
+
+- Perfect grammar and consistent style. Many writers are professionals or have been edited. Polish does not equal AI.
+- Mixed casual and formal registers. This often signals a person in a technical field, a young writer, or someone with neurodivergent prose habits, not a chatbot.
+- "Bland" or "robotic" prose. AI prose has specific tells. Generic dryness without those tells is just dry writing.
+- Formal or academic vocabulary. AI overuses specific fancy words (rule 7), not all fancy words. Do not flatten "ostensibly" or "constituent" just because they sound brainy.
+- Letter-style opening or closing. Salutations and sign-offs predate ChatGPT by centuries.
+- Common transition words in isolation. "Additionally", "moreover", "consequently" are AI-coded only when piled up. One "however" is not a tell.
+- Curly quotes alone. macOS, Word, Google Docs auto-curl by default. Curly quotes only count when stacked with other tells.
+- Em dashes alone. Many editors and journalists use them often. Em dashes are evidence only when paired with formulaic sales-y rhythm. (You still remove them in the final rewrite per rule 14, but do not over-rewrite the surrounding prose just because an em dash was present.)
+- Unsourced claims. Most of the web is unsourced. Lack of citations does not prove anything.
+- Correct, complex formatting. Visual editors and templates produce clean output without any AI.
+
+When in doubt, look for CLUSTERS of tells, not isolated ones. A single em dash means nothing; em dashes plus rule-of-three plus "vibrant tapestry" plus a "Conclusion" section is a confession.
+
+# Signs of human writing (preserve these)
+
+When you see these, lean toward leaving the prose alone. Over-editing destroys what makes the piece sound human:
+
+- Specific, unusual, hard-to-fabricate detail. A real address. A weird quote. A phrase like "the lawyer who used to work upstairs from my dentist." LLMs round off specifics; humans hoard them.
+- Mixed feelings and unresolved tension. "I think this is mostly good, but it bothers me, and I cannot fully explain why." LLMs default to clean takes.
+- Dated, era-bound references. Slang, memes, or in-jokes that map to a specific year and subculture. Models lag by a year or more.
+- First-person editorial choices the writer can defend. If the writer can explain why they made a particular cut or used a particular word, that is a strong human signal.
+- Variety in sentence length. Real writing alternates short and long. AI writing tends toward an even, mid-length cadence.
+- Genuine asides, parentheticals, or self-corrections. "(I keep wanting to say 'almost' here, but it really was certain.)" Models rarely interrupt themselves like this.
 
 ## Communication artifacts
 20. Chatbot artifacts: "I hope this helps", "Let me know if...", "Of course!", "Certainly!". Remove entirely.
-21. Cutoff disclaimers: "While specific details are limited...", "As of my last training update...". Find sources or remove.
+21. Cutoff disclaimers AND speculative gap-filling: "While specific details are limited...", "As of my last training update...", "It is possible that...", "One could argue...". Find sources or remove. Do not invent plausible-sounding speculation to fill in for missing knowledge.
 22. Sycophantic tone: "Great question!", "You're absolutely right!". Respond directly.
 
 ## Filler and hedging

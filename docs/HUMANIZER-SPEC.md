@@ -1,14 +1,20 @@
 ---
 name: humora-humanizer
-version: 2.9.0
-source: https://github.com/blader/humanizer (SKILL.md)
+version: 3.0.0
+source: https://github.com/blader/humanizer (SKILL.md, MIT)
 upstream-source: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
 license: MIT
+attribution: Patterns 1-29 derive from the humanizer skill by blader (MIT-licensed). Pattern 30, the "What NOT to flag" section, and the "Signs of human writing" section were merged in from upstream v2.7.0 (still MIT). The humora-specific structure (humanize/audit/revise modes, tone presets, voice matching block) is original to this project.
 ---
 
 # Humora Humanizer Spec
 
-This is the canonical editor specification that powers `src/lib/ai/prompts.ts`. It's adapted from the open-source `humanizer` skill (v2.9.0) and Wikipedia's "Signs of AI writing" guide.
+This is the canonical editor specification that powers `src/lib/ai/prompts.ts`. It's adapted from the open-source `humanizer` skill and Wikipedia's "Signs of AI writing" guide.
+
+## Version history
+
+- **3.0.0** — Added pattern 30 (Diff-Anchored Writing). Expanded pattern 14 to explicitly cover en dashes. Expanded pattern 21 to include speculative gap-filling. Added two guardrail sections: "What NOT to flag (false positives)" and "Signs of human writing (preserve these)". These reduce over-correction and help the model leave legitimate human prose alone. Sourced from upstream humanizer v2.7.0.
+- **2.9.0** — Initial Humora adaptation of the upstream v2.9.0 skill. 29 patterns + voice matching + humanize/audit/revise mode structure.
 
 **When you change behavior, change this file first**, then regenerate the prompt module. Do not edit `prompts.ts` directly without updating this spec — they drift, and the drift is invisible until output quality slips.
 
@@ -57,7 +63,7 @@ Avoiding AI patterns is half the job. Sterile writing is just as obvious as slop
 
 ---
 
-## The 29 patterns
+## The 30 patterns
 
 Before returning the final text, the model must silently check the rewrite against this list. If the output still contains a banned pattern, it must revise again internally. The user should only see the final rewrite.
 
@@ -99,7 +105,7 @@ Watch for: boasts, vibrant, rich (figurative), nestled, breathtaking, must-visit
 
 ### Style patterns
 
-**14. Em dash overuse** — most em dashes can be commas or periods. Especially in marketing copy.
+**14. Em dashes AND en dashes** — cut them. The final rewrite must contain zero em dashes (—) or en dashes (–) used as punctuation. Use commas, periods, or parentheses. Hyphens in compound words are fine.
 
 **15. Boldface overuse** — `**OKRs**, **KPIs**` → plain text.
 
@@ -119,11 +125,13 @@ Watch for: boasts, vibrant, rich (figurative), nestled, breathtaking, must-visit
 
 **29. Fragmented headers** — heading followed by a one-line restatement before the real content → remove the restatement.
 
+**30. Diff-anchored writing** — docs or comments that narrate a change ("this was added to replace the previous approach...") instead of describing the thing as it is. Rewrite to describe the state, not the history. Exception: actual changelogs, release notes, migration guides where the diff IS the content.
+
 ### Communication patterns
 
 **20. Chatbot artifacts** — "I hope this helps," "Let me know if you'd like..." → remove.
 
-**21. Knowledge-cutoff disclaimers** — "While specific details are limited..." → find sources or remove.
+**21. Knowledge-cutoff disclaimers AND speculative gap-filling** — "While specific details are limited...", "It is possible that...", "One could argue..." → find sources or remove. Do not invent plausible-sounding speculation to fill in for missing knowledge.
 
 **22. Sycophantic tone** — "Great question! You're absolutely right!" → respond directly.
 
@@ -139,6 +147,36 @@ Watch for: boasts, vibrant, rich (figurative), nestled, breathtaking, must-visit
 **24. Excessive hedging** — "could potentially possibly" → "may."
 
 **25. Generic positive conclusions** — "the future looks bright" → state actual plans.
+
+---
+
+## Detection guidance: what NOT to flag (false positives)
+
+A clean human writer can hit several of the patterns above without any AI involvement. Before rewriting, sanity-check that you are not gutting legitimate prose. The following are *not* reliable indicators on their own:
+
+- Perfect grammar and consistent style. Many writers are professionals or have been edited. Polish does not equal AI.
+- Mixed casual and formal registers. Often signals a person in a technical field, a young writer, or someone with neurodivergent prose habits, not a chatbot.
+- "Bland" or "robotic" prose. AI prose has specific tells. Generic dryness without those tells is just dry writing.
+- Formal or academic vocabulary. AI overuses specific fancy words (rule 7), not all fancy words.
+- Letter-style opening or closing. Salutations and sign-offs predate ChatGPT by centuries.
+- Common transition words in isolation. "Additionally", "moreover", "consequently" are AI-coded only when piled up. One "however" is not a tell.
+- Curly quotes alone. macOS, Word, Google Docs auto-curl by default.
+- Em dashes alone. (We still remove them per rule 14, but do not over-rewrite the surrounding prose just because an em dash was present.)
+- Unsourced claims. Most of the web is unsourced.
+- Correct, complex formatting. Visual editors and templates produce clean output without any AI.
+
+When in doubt, look for **clusters** of tells, not isolated ones. A single em dash means nothing; em dashes plus rule-of-three plus "vibrant tapestry" plus a "Conclusion" section is a confession.
+
+## Signs of human writing (preserve these)
+
+When you see these, lean toward leaving the prose alone. Over-editing destroys what makes the piece sound human:
+
+- Specific, unusual, hard-to-fabricate detail. A real address. A weird quote. "The lawyer who used to work upstairs from my dentist." LLMs round off specifics; humans hoard them.
+- Mixed feelings and unresolved tension. "I think this is mostly good, but it bothers me, and I cannot fully explain why." LLMs default to clean takes.
+- Dated, era-bound references. Slang, memes, in-jokes that map to a specific year and subculture. Models lag by a year or more.
+- First-person editorial choices the writer can defend.
+- Variety in sentence length. Real writing alternates short and long; AI tends toward an even, mid-length cadence.
+- Genuine asides, parentheticals, or self-corrections.
 
 ---
 
