@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { HUMANIZER_SYSTEM_PROMPT, buildHumanizeUserMessage, type Tone } from "@/lib/ai/prompts";
+import { buildHumanizeUserMessage, wrapEngineSystem, type Tone } from "@/lib/ai/prompts";
 import { toSanitizedTextStreamResponse } from "@/lib/ai/sanitize";
 import { getAnonLimiter } from "@/lib/ratelimit";
 import { countWords } from "@/lib/utils";
+import { getEngine, normalizeEngineId } from "@/lib/ai/engines";
 
 export const runtime = "nodejs";
 
@@ -46,9 +47,12 @@ export async function POST(req: Request) {
     );
   }
 
+  const engineId = normalizeEngineId(body.engine);
+  const engine = getEngine(engineId);
+
   const result = streamText({
     model: openai("gpt-4o-mini"),
-    system: HUMANIZER_SYSTEM_PROMPT,
+    system: wrapEngineSystem(engine.system),
     prompt: buildHumanizeUserMessage({ text, tone }),
   });
 

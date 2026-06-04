@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { HUMANIZER_SYSTEM_PROMPT, buildHumanizeUserMessage, type Tone } from "@/lib/ai/prompts";
+import { buildHumanizeUserMessage, wrapEngineSystem, type Tone } from "@/lib/ai/prompts";
 import { sanitizeHumanizedOutput, toSanitizedTextStreamResponse } from "@/lib/ai/sanitize";
 import { checkUsage, incrementUsage, getOrCreateUser } from "@/lib/usage";
 import { getUserLimiter } from "@/lib/ratelimit";
 import { countWords } from "@/lib/utils";
 import { connectDB } from "@/lib/db";
 import { Document } from "@/lib/db/schema";
+import { getEngine, normalizeEngineId } from "@/lib/ai/engines";
 
 export const runtime = "nodejs";
 
@@ -43,6 +44,8 @@ export async function POST(req: Request) {
     typeof body.voiceSample === "string" && body.voiceSample.trim()
       ? body.voiceSample.slice(0, 4000)
       : undefined;
+  const engineId = normalizeEngineId(body.engine);
+  const engine = getEngine(engineId);
 
   if (text.length > 30_000) {
     return NextResponse.json({ error: "Drafts are capped at 30,000 characters per run." }, { status: 400 });
@@ -69,7 +72,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai("gpt-4o-mini"),
-    system: HUMANIZER_SYSTEM_PROMPT,
+    system: wrapEngineSystem(engine.system),
     prompt: buildHumanizeUserMessage({ text, tone, voiceSample }),
     onFinish: async ({ text: outputText }) => {
       const words = countWords(text);

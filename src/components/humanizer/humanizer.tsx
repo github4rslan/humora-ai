@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { Tone } from "@/lib/ai/prompts";
+import { EngineSelect } from "./engine-select";
 
 const TONES: { id: Tone; label: string; hint: string }[] = [
   { id: "natural", label: "Natural", hint: "My default. Varied, a little opinionated." },
@@ -22,6 +23,7 @@ export function Humanizer() {
   const [input, setInput] = useState("");
   const [voiceSample, setVoiceSample] = useState("");
   const [tone, setTone] = useState<Tone>("natural");
+  const [engine, setEngine] = useState<string>("humora-original");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -39,7 +41,7 @@ export function Humanizer() {
       const res = await fetch("/api/humanize", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: input, tone, voiceSample: voiceSample || undefined }),
+        body: JSON.stringify({ text: input, tone, voiceSample: voiceSample || undefined, engine }),
       });
 
       if (!res.ok) {
@@ -199,6 +201,7 @@ export function Humanizer() {
       </div>
 
       <aside className="space-y-5">
+        <EngineSelect value={engine} onChange={setEngine} />
         <Card className="p-5">
           <Badge>Tone</Badge>
           <div className="mt-3 grid grid-cols-2 gap-2">
