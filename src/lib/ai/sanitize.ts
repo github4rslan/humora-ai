@@ -117,18 +117,24 @@ export function sanitizeHumanizedOutput(text: string): string {
     .replaceAll(/[;:()]/g, " ");
 }
 
-export function toSanitizedTextStreamResponse(textStream: ReadableStream<string>): Response {
-  const sanitizedStream = textStream
-    .pipeThrough(
-      new TransformStream<string, string>({
-        transform(chunk, controller) {
-          controller.enqueue(sanitizeHumanizedOutput(chunk));
-        },
-      })
-    )
-    .pipeThrough(new TextEncoderStream());
+export function toSanitizedTextStreamResponse(
+  textStream: AsyncIterable<string>
+): Response {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      try {
+        for await (const chunk of textStream) {
+          controller.enqueue(encoder.encode(sanitizeHumanizedOutput(chunk)));
+        }
+        controller.close();
+      } catch (err) {
+        controller.error(err);
+      }
+    },
+  });
 
-  return new Response(sanitizedStream, {
+  return new Response(stream, {
     headers: {
       "content-type": "text/plain; charset=utf-8",
     },

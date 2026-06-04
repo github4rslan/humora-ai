@@ -4,17 +4,24 @@ import { Redis } from "@upstash/redis";
 let redis: Redis | null = null;
 let anonLimiter: Ratelimit | null = null;
 let userLimiter: Ratelimit | null = null;
+let redisInitFailed = false;
 
 function getRedis(): Redis | null {
   if (redis) return redis;
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (redisInitFailed) return null;
+
+  const url = process.env.UPSTASH_REDIS_REST_URL?.trim();
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
+  if (!url || !token) return null;
+
+  try {
+    redis = new Redis({ url, token });
+    return redis;
+  } catch (err) {
+    redisInitFailed = true;
+    console.error("[ratelimit] failed to init Upstash Redis client", err);
     return null;
   }
-  redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  });
-  return redis;
 }
 
 export function getAnonLimiter(): Ratelimit | null {
