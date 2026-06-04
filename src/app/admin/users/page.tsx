@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { listUsers } from "@/lib/admin";
-import { cn } from "@/lib/utils";
+import { PlanCell } from "@/components/admin/plan-cell";
 
 export const dynamic = "force-dynamic";
 
@@ -88,14 +87,7 @@ export default async function AdminUsers({
                 >
                   <td className="px-5 py-3 font-medium">{u.email}</td>
                   <td className="px-5 py-3">
-                    <Badge
-                      className={cn(
-                        u.plan === "pro" && "border-primary/40 bg-primary/10 text-primary",
-                        u.plan === "business" && "border-accent/40 bg-accent/10 text-accent-foreground"
-                      )}
-                    >
-                      {u.plan}
-                    </Badge>
+                    <PlanCell userId={u.id} email={u.email} currentPlan={u.plan} />
                   </td>
                   <td className="px-5 py-3 text-right tabular-nums">
                     {u.wordsThisMonth.toLocaleString()}
