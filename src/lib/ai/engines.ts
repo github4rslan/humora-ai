@@ -14,6 +14,7 @@ export const ENGINE_IDS = [
   "blader-v29",
   "blader-upstream",
   "brandonwise",
+  "lynote-style",
 ] as const;
 
 export type EngineId = (typeof ENGINE_IDS)[number];
